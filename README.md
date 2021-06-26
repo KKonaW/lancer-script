@@ -1,2 +1,10 @@
 # lancer-script
-Lancer script tera online
+
+free to test it yourself.
+dont buy this garbage scripts.
+
+ngsp + macro maker is far better than this garbage bern wrote.
+
+
+https://github.com/Mkalo/macro-maker
+https://github.com/tera-toolbox/tera-toolbox
