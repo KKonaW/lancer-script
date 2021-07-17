@@ -1,4 +1,4 @@
-/* SCRIPT BY BERNKASTEL & shira */
+/* SCRIPT BY YOUR MOM */
 'use strict'
 
 //Lancer Skills
