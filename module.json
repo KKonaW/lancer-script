@@ -1,11 +1,11 @@
 {
     "disableAutoUpdate": true,
-    "name": "lancer-script",
-    "author": "Bernkastel",
-    "description": "==",
-    "version": "2.0",
+    "name": "script-lancer",
+    "author": "<font color='#FDD017'>Bernie 2020</font>",
+    "description": "Dead Game",
+    "version": "<font color='#FC0FC0'>GF-107.2</font>",
     "options": {
-        "niceName": "lancer-script",
-        "guiName": "lancer-script"
+        "niceName": "script-lancer",
+        "guiName": "<font color='#FDD017'>script-lancer</font>"
     }
 }
