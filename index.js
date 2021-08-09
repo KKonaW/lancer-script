@@ -735,7 +735,7 @@ module.exports = function lancer(dispatch) {
   var atkArr;
 
   let talentState = [];
-  dispatch.hook('S_LOAD_EP_INFO', 2, (event) => {
+  dispatch.hook('S_LOAD_EP_INFO', 3, (event) => {
     if (!enabled) { return };
     talentState = [];
     event.perks.forEach(function (element) {
