@@ -1,9 +1,9 @@
 {
     "disableAutoUpdate": true,
     "name": "script-lancer",
-    "author": "<font color='#FDD017'>Bernie 2020</font>",
-    "description": "Dead Game",
-    "version": "<font color='#FC0FC0'>GF-107.2</font>",
+    "author": "<font color='#FDD017'>AOC 2024</font>",
+    "description": "==",
+    "version": "<font color='#FC0FC0'>GF-110</font>",
     "options": {
         "niceName": "script-lancer",
         "guiName": "<font color='#FDD017'>script-lancer</font>"

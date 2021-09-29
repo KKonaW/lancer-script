@@ -1,7 +1,6 @@
-/* SCRIPT BY YOUR MOM */
 'use strict'
-
 //Lancer Skills
+
 const JOB_LANCER =1;
 
 const S_P =11200;
@@ -10,7 +9,7 @@ const S_P3 =11202;
 const S_P_D =650;
 const S_P2_D =1000;
 const S_P3_D =1800;
-//const SKILL_BLOCK =20200;
+const SKILL_BLOCK =20200;
 const SKILL_BLOCK_D =350;
 const S_OnSl = 30200; // shield bash / 25% speed glyph
 const S_OnSl_D =940;
@@ -47,8 +46,6 @@ const SKILL_CHARGING_2_DURATION =930;
 const S_Wind =160700;
 const S_Wind_D = 690; //no aspd scaling
 const S_ARush =170200;
-const S_ARush_2 =170240;
-const S_ARush_3 =170250;
 const S_ARush_D = 690; //no aspd scaling
 const S_ShBarrage =181100;
 //const S_ShBarrage_D =600;
@@ -101,7 +98,9 @@ const BLACKLIST = [110100, 111110, 111111, 111112, 111113, 111114, 111115, 11111
   111237, 111238, 111239, 111241, 111242, 111243, 111244, 111245, 111246, 111247, 111248, 111249, 111250, 111251, 111252, 111253,
   111254, 111255, 111256, 111257, 111258, 111259, 111260, 111261, 111262, 111263, 111264, 111265, 111266, 111267, 111268, 111269,
   111270, 111271, 111272, 111273, 111274, 111275, 111276, 111277, 111278, 111279, 111280, 111281, 111282, 111283, 111284, 111285,
-  111286, 111287, 111288, 111289, 111290, 111291, 111292, 111293, 111294, 111295, 111296, 111297, 111298, 111299, 111301, 111302, 111310, 111320, 111319, 111324, 111325, 111330, 111305, 111326, 111328, 111314, 111308, 111307, 111327];
+  111286, 111287, 111288, 111289, 111290, 111291, 111292, 111293, 111294, 111295, 111296, 111297, 111298, 111299, 111301, 111302,
+  111303,111304,111305,111306,111307,111308,111309,111310,111311,111312,111313,111314,111315,111316,111317,111318,111319,111320,111321,111322,
+  111324,111325,111326,111327,111328,111329,111330,116001,116002,116003,116004,117002,117003,117004,117005,118000];
 module.exports = function lancer(dispatch) {
 
   let config = {};
@@ -210,7 +209,7 @@ module.exports = function lancer(dispatch) {
     WALLOP_CANCEL_TIME_UNCHAINED = config.WALLOP_CANCEL_TIME_UNCHAINED;
   }
   if (!("WALLOP_CANCEL_TIME_UNCHAINED" in config)) {
-    config.WALLOP_CANCEL_TIME_UNCHAINED =1600; //KEY=24582706191583=0
+    config.WALLOP_CANCEL_TIME_UNCHAINED =1600;
     config.WALLOP_CANCEL_TIME_UNCHAINED_DESCRIPTION = "NOTE BOTH WALLOP TIME HAVE TO BE ACTIVE TO TAKE EFFECT.";
     settingUpdate();
   }
@@ -287,12 +286,12 @@ module.exports = function lancer(dispatch) {
     config.BARRAGE_SPRINGLOCK_DESCRIPTION = "set to lock spring attack for x ms after barrage2. Use this only with barrage auto cancel if you have ghosting issues with spring, this scales with ASPD.";
     settingUpdate();
   }
-  let AUTOBLOCKDELAY =1;
+  let AUTOBLOCKDELAY =0;
   if (("AUTOBLOCKDELAY" in config)) {
     AUTOBLOCKDELAY = config.AUTOBLOCKDELAY;
   }
   if (!("AUTOBLOCKDELAY" in config)) {
-    config.AUTOBLOCKDELAY =1;
+    config.AUTOBLOCKDELAY =0;
     config.AUTOBLOCKDELAY_DESCRIPTION = "this is the auto block delay. If set under 30, it will not consume RE.";
     config.AUTOBLOCKDELAY_DESCRIPTION_2 = "NOTE: USING AUTO CANCEL CAN POTENTIALLY BREAK YOUR CHAIN (OBVIOUSLY)";
     config.AUTOBLOCKDELAY_DESCRIPTION_3 = "Set to 0 to disable any of the above auto cancel. This is cancel time in milliseconds and scales with aspd.";
@@ -352,17 +351,6 @@ module.exports = function lancer(dispatch) {
     config.SB_AUTO_ONSLAUGHT_DESCRIPTION = "DO NOT USE THIS WITHOUT ROBOTJS. Auto onslaught if shield bash. Can be toggled on off with sbos1 command.";
     settingUpdate();
   }
-  
-  let SBarrage_AUTO_ONSLAUGHT = false;
-  if ("SBarrage_AUTO_ONSLAUGHT" in config) {
-    SBarrage_AUTO_ONSLAUGHT = config.SBarrage_AUTO_ONSLAUGHT;
-  }
-  if (!("SBarrage_AUTO_ONSLAUGHT" in config)) {
-    config.SBarrage_AUTO_ONSLAUGHT = false;
-    config.SBarrage_AUTO_ONSLAUGHT_DESCRIPTION = "DO NOT USE THIS WITHOUT ROBOTJS. Auto onslaught after shield barrage.";
-    settingUpdate();
-  }
-  
   let ONSLAUGHT_KEY = "5";
   if (("ONSLAUGHT_KEY" in config)) {
     ONSLAUGHT_KEY = config.ONSLAUGHT_KEY;
@@ -390,17 +378,6 @@ module.exports = function lancer(dispatch) {
     config.ONSLAUGHT_AUTO_CANCEL_DELAY_DESCRIPTION = "Onslaught block cancel delay at base aspd";
     settingUpdate();
   }
-  
-  let ONSLAUGHT_LOCK_DELAY = false;
-  if (("ONSLAUGHT_LOCK_DELAY" in config)) {
-    ONSLAUGHT_LOCK_DELAY = config.ONSLAUGHT_LOCK_DELAY;
-  }
-  if (!("ONSLAUGHT_LOCK_DELAY" in config)) {
-    config.ONSLAUGHT_LOCK_DELAY = false;
-    config.ONSLAUGHT_LOCK_DELAY_DESCRIPTION = "Onslaught cannot be cancelled by anything except block and backstep.";
-    settingUpdate();
-  }
-  
   let BLOCK_KEY = "6";
   if (("BLOCK_KEY" in config)) {
     BLOCK_KEY = config.BLOCK_KEY;
@@ -422,7 +399,7 @@ module.exports = function lancer(dispatch) {
   
   let COUNTER_AUTO_SPRING = true;
   if ("COUNTER_AUTO_SPRING" in config) {
-    COUNTER_AUTO_SPRING = config.COUNTER_AUTO_SPRING;	
+    COUNTER_AUTO_SPRING = config.COUNTER_AUTO_SPRING;
   }
   if (!("COUNTER_AUTO_SPRING" in config)) {
     config.COUNTER_AUTO_SPRING = true;
@@ -444,7 +421,7 @@ module.exports = function lancer(dispatch) {
     SPRING_BUG_TIME = config.SPRING_BUG_TIME;
   }
   if (!("SPRING_BUG_TIME" in config)) {
-    config.SPRING_BUG_TIME =150;
+    config.SPRING_BUG_TIME =150; //KEY=197383777980577
     config.SPRING_BUG_TIME_DESCRIPTION = "Some people have issues with robotjs being too inhumanly fast and missing a spring tick";
     config.SPRING_BUG_TIME_DESCRIPTION_2 = "this will slow down the SB2 -> Spring timing by this many milliseconds (will scale off aspd).";
     settingUpdate();
@@ -539,16 +516,6 @@ module.exports = function lancer(dispatch) {
     settingUpdate();
   }
   
-  let AUTO_ATTACK_ONSLAUGHT = false;
-	if (("AUTO_ATTACK_ONSLAUGHT" in config)) {
-		AUTO_ATTACK_ONSLAUGHT = config.AUTO_ATTACK_ONSLAUGHT;
-	}
-	if (!("AUTO_ATTACK_ONSLAUGHT" in config)) {
-		config.AUTO_ATTACK_ONSLAUGHT = false;
-		config.AUTO_ATTACK_ONSLAUGHT_DESCRIPTION = "Auto auto attack -> onslaught, requires robotjs. Does not trigger if you hold down movement key.";
-		settingUpdate();
-	}
-  
   let AUTO_ATTACK_CANCEL = false;
 	if (("AUTO_ATTACK_CANCEL" in config)) {
 		AUTO_ATTACK_CANCEL = config.AUTO_ATTACK_CANCEL;
@@ -568,58 +535,8 @@ module.exports = function lancer(dispatch) {
 		config.AUTO_ATTACK_CANCEL_DELAY_DESCRIPTION = "Auto block cancel auto attack delay in milliseconds, scales with aspd.";
 		settingUpdate();
 	}
-	
-	let AUTO_CHARGE_LEAP = false;
-	if (("AUTO_CHARGE_LEAP" in config)) {
-		AUTO_CHARGE_LEAP = config.AUTO_CHARGE_LEAP;
-	}
-	if (!("AUTO_CHARGE_LEAP" in config)) {
-		config.AUTO_CHARGE_LEAP = false;
-		config.AUTO_CHARGE_LEAP_DESCRIPTION = "If the last skill is not wallop, enabling this will attempt to instant charging lunge before if you press righteous leap.";
-		settingUpdate();
-	}
-	
-	let ARUSH_X = false;
-	if (("ARUSH_X" in config)) {
-		ARUSH_X = config.ARUSH_X;
-	}
-	if (!("ARUSH_X" in config)) {
-		config.ARUSH_X = false;
-		config.ARUSH_X_DESCRIPTION = "Auto use X_KEY when Adrenaline Rush is used. X_KEY must be set. This macro does not work without ROBOTJS.";
-		settingUpdate();
-	}
-	
-	let X_KEY = "3";
-	if (("X_KEY" in config)) {
-		X_KEY = config.X_KEY;
-	}
-	if (!("X_KEY" in config)) {
-		config.X_KEY = "3";
-		config.X_KEY_DESCRIPTION = "X Key. Find keyboard syntax list here http://robotjs.io/docs/syntax";
-		settingUpdate();
-	}
-	
-	let Y_KEY = X_KEY;
-	if (("Y_KEY" in config)) {
-		Y_KEY = config.Y_KEY;
-	}
-	if (!("Y_KEY" in config)) {
-		config.Y_KEY = X_KEY;
-		config.Y_KEY_DESCRIPTION = "Y Key (keep the same as X_KEY if you don't want a second skill to activate). Find keyboard syntax list here http://robotjs.io/docs/syntax";
-		settingUpdate();
-	}
-	
-	let Z_KEY = X_KEY;
-	if (("Z_KEY" in config)) {
-		Z_KEY = config.Z_KEY;
-	}
-	if (!("Z_KEY" in config)) {
-		config.Z_KEY = X_KEY;
-		config.Z_KEY_DESCRIPTION = "Z Key (keep the same as X_KEY if you don't want a second skill to activate). Find keyboard syntax list here http://robotjs.io/docs/syntax";
-		settingUpdate();
-	}
 
-  let KR_ONSLAUGHT_TALENT = false;
+  let KR_ONSLAUGHT_TALENT = true;
   
   let SKILL_BLOCK =20200;
 
@@ -628,7 +545,7 @@ module.exports = function lancer(dispatch) {
   let cid;
   let job;
   let model;
-  let enabled = false;
+  let enabled = true;
   let aspd;
 
   let atkid = [];
@@ -646,9 +563,6 @@ module.exports = function lancer(dispatch) {
 
   let Ignore1 = false;
   let Ignore2;
-  
-  let locking = false;
-  let locking2;
 
   let SBASHAUTOONSLAUGHT_TIME =0;
   let SCHAX =1;
@@ -670,16 +584,16 @@ module.exports = function lancer(dispatch) {
   let clearPunchCounter;
 
   let dstance =0;
-  let sBashGlyph = false;
+  let sBashGlyph = true;
   let onslaughtTimer1;
   let onslaughtTimer2;
   let onslaughtTimer3;
   let onslaughtTimer4;
   let onslaughtTimer5;
   let msgSuppress;
-  let canLeash = false;
+  let canLeash = true;
   let barragelock = true;
-  let safetyX = false;
+  let safetyX = true;
   let WALLOPCANCEL;
 
   let lastBlock;
@@ -716,12 +630,9 @@ module.exports = function lancer(dispatch) {
   let aRusha = false;
 
   let darkness =0;
-  let light =0;
   let yes11 =0;
   let autoreblock = false;
   let blockstate;
-  
-  let onslaughtlock = false;
 
   let zoKk;
 
@@ -781,7 +692,7 @@ module.exports = function lancer(dispatch) {
       enabled = [JOB_LANCER].includes(job);
     }
   });
-
+  
   dispatch.hook('S_LOGIN', dispatch.majorPatchVersion >= 86 ? 14 : 13, (event) => {
 	  lastBulk = event;
     cid = event.gameId;
@@ -877,7 +788,7 @@ module.exports = function lancer(dispatch) {
       moving: false,
       dest: { x: 0, y: 0, Z: 0 },
       target: 0n,
-      animSeq: [],
+      movement: [],
     });
 
     finishcheck[event.skill.id] = setTimeout(function (event) { finish[event.skill.id] = true; }, (duration / aspd), event);
@@ -958,7 +869,7 @@ module.exports = function lancer(dispatch) {
       moving: false,
       dest: { x: 0, y: 0, Z: 0 },
       target: 0n,
-      animSeq: [],
+      movement: [],
     });
     dispatch.toClient('S_INSTANT_DASH', 3, {
       gameId: cid,
@@ -1082,7 +993,7 @@ module.exports = function lancer(dispatch) {
       moving: false,
       dest: { x: 0, y: 0, Z: 0 },
       target: 0n,
-      animSeq: [],
+      movement: [],
     });
   }
 
@@ -1113,7 +1024,7 @@ module.exports = function lancer(dispatch) {
       moving: false,
       dest: { x: 0, y: 0, Z: 0 },
       target: 0n,
-      animSeq: [],
+      movement: [],
     });
   }
 
@@ -1169,7 +1080,7 @@ module.exports = function lancer(dispatch) {
       yyy = 1.25;
     }
     if (event.skill.id == S_OnSl && talentState[820320]) {
-      yyy = yyy * (1 + talentState[820320] * 5 / 700 + 75 /700);
+      yyy = yyy + (talentState[820320] * 5 / 700 + 50 /700);
     }
     if (event.skill.id == S_OnSl && (lastSkill == S_P || lastSkill == S_P2 || lastSkill == S_P3 || lastSkill == S_ShBarrage || lastSkill == S_ShBarrage2 || lastSkill == S_SBash || lastSkill == "special4") && (finish[lastSkill] == false || finish["special"] == false)) {
       zzz =30;
@@ -1243,11 +1154,6 @@ module.exports = function lancer(dispatch) {
       var d = new Date();
       darkness = d.getTime();
     }
-	
-	if(event.skill.id == S_RightLeap){
-		var d = new Date();
-      light = d.getTime();
-    }
 
 
     finish[SKILL_CHARGING] = true;
@@ -1275,7 +1181,7 @@ module.exports = function lancer(dispatch) {
       moving: false,
       dest: { x: 0, y: 0, Z: 0 },
       target: 0n,
-      animSeq: [],
+      movement: [],
     });
 	
 	if (event.skill.id == S_Wind || event.skill.id == S_ARush || event.skill.id == S_Pledge || event.skill.id == S_Menace || event.skill.id == S_IronWill) {
@@ -1374,9 +1280,6 @@ module.exports = function lancer(dispatch) {
     if (blockActive ==1) {
       return false;
     }
-	if(ONSLAUGHT_LOCK_DELAY && onslaughtlock && event.skill.id != S_BStep && event.skill.id != SKILL_BLOCK){
-		return false;
-	}
     if (disabSkill[event.skill.id] == 'undefined') disabSkill[event.skill.id] = false;
     if (!disabSkill[event.skill.id]) {
       lastSkillDelay =999999;
@@ -1468,17 +1371,11 @@ module.exports = function lancer(dispatch) {
       if (lastSkill == S_Wallop && zzz != 0 && ((d.getTime() - darkness) < (Number(WALLOP_CANCEL_TIME_CHAINED) / aspd))) {
         yes11 = (Number(WALLOP_CANCEL_TIME_CHAINED) / aspd) - (d.getTime() - darkness);
       }
-      if (lastSkill == S_OnSl && sBashGlyph && !talentState[820320] && ((d.getTime() - darkness) < (Number(ONSLAUGHT_AUTO_CANCEL_DELAY) / aspd / 1.25))) {
+      if (lastSkill == S_OnSl && sBashGlyph && ((d.getTime() - darkness) < (Number(ONSLAUGHT_AUTO_CANCEL_DELAY) / aspd / 1.25))) {
         yes11 = (Number(ONSLAUGHT_AUTO_CANCEL_DELAY) / aspd / 1.25) - (d.getTime() - darkness);
       }
-      if (lastSkill == S_OnSl && !sBashGlyph && !talentState[820320] && ((d.getTime() - darkness) < (Number(ONSLAUGHT_AUTO_CANCEL_DELAY) / aspd))) {
+      if (lastSkill == S_OnSl && !sBashGlyph && ((d.getTime() - darkness) < (Number(ONSLAUGHT_AUTO_CANCEL_DELAY) / aspd))) {
         yes11 = (Number(ONSLAUGHT_AUTO_CANCEL_DELAY) / aspd) - (d.getTime() - darkness);
-      }
-	  if (lastSkill == S_OnSl && sBashGlyph && talentState[820320] && ((d.getTime() - darkness) < (Number(ONSLAUGHT_AUTO_CANCEL_DELAY) / (aspd * (1.25 * (1 + talentState[820320] * 5 / 700 + 75 /700)))))) {
-        yes11 = (Number(ONSLAUGHT_AUTO_CANCEL_DELAY) / (aspd * (1.25 * (1 + talentState[820320] * 5 / 700 + 75 /700)))) - (d.getTime() - darkness);
-      }
-      if (lastSkill == S_OnSl && !sBashGlyph && talentState[820320] && ((d.getTime() - darkness) < (Number(ONSLAUGHT_AUTO_CANCEL_DELAY) / (aspd * (1 + talentState[820320] * 5 / 700 + 75 /700))))) {
-        yes11 = (Number(ONSLAUGHT_AUTO_CANCEL_DELAY) / (aspd * (1 + talentState[820320] * 5 / 700 + 75 /700))) - (d.getTime() - darkness);
       }
       setTimeout(function () {
         if (lastSkill == S_Wallop && WALLOP_AUTO_COUNTER && (cdCheck[S_RightLeap] == false || !DO_NOT_USE_IF_RIGHTEOUS_LEAP_OFF_CD)) {
@@ -1545,7 +1442,7 @@ module.exports = function lancer(dispatch) {
           robot5.keyTap(SHIELD_COUNTER_KEY);
         }
       }, (600 + yes11 -5));
-	  if(lastSkill == S_RightLeap && LEAP_AUTO_COUNTER && (d.getTime() - light) >1230){
+	  
 	  setTimeout(function () {
         if (lastSkill == S_RightLeap && LEAP_AUTO_COUNTER) {
           var robot2225 = require("robotjs");
@@ -1571,36 +1468,9 @@ module.exports = function lancer(dispatch) {
         }
       },100);
     }
-	if(lastSkill == S_RightLeap && LEAP_AUTO_COUNTER && (d.getTime() - light) <1230){
-		setTimeout(function () {
-        if (lastSkill == S_RightLeap && LEAP_AUTO_COUNTER) {
-          var robot2225 = require("robotjs");
-          robot2225.keyTap(SHIELD_COUNTER_KEY);
-		  failsafe =0;
-        repeater(SHIELD_COUNTER_KEY, S_RightLeap);
-        }
-      }, 1230 / aspd + light - d.getTime());
-	  setTimeout(function () {
-        if (lastSkill == S_RightLeap && LEAP_AUTO_COUNTER) {
-          var robot2226 = require("robotjs");
-          robot2226.keyTap(SHIELD_COUNTER_KEY);
-		  failsafe =0;
-        repeater(SHIELD_COUNTER_KEY, S_RightLeap);
-        }
-      }, 1230 / aspd + light - d.getTime() +50);
-	  setTimeout(function () {
-        if (lastSkill == S_RightLeap && LEAP_AUTO_COUNTER) {
-          var robot2227 = require("robotjs");
-          robot2227.keyTap(SHIELD_COUNTER_KEY);
-		  failsafe =0;
-        repeater(SHIELD_COUNTER_KEY, S_RightLeap);
-        }
-      }, 1230 / aspd + light - d.getTime() +100);
-	}
-	}
   });
 
-  dispatch.hook('S_EACH_SKILL_RESULT', dispatch.majorPatchVersion >= 86 ? 14 : 13, (event) => {
+  dispatch.hook('S_EACH_SKILL_RESULT', 15, (event) => {
     if(event.target === cid) {
       if (event.reaction.enable == true) {
         lastSkill =1;
@@ -1609,9 +1479,6 @@ module.exports = function lancer(dispatch) {
         clearTimeout(onslaughtTimer3);
         clearTimeout(onslaughtTimer4);
         clearTimeout(onslaughtTimer5);
-		blockActive =0;
-		  dstance =0;
-		  clearTimeout(blockd);
       }
     }
   });
@@ -1627,9 +1494,6 @@ module.exports = function lancer(dispatch) {
       }
       zoKk++;
     }
-	if(event.skill.id == S_Bulwark && lastSkill == S_Bulwark){
-		dispatch.toServer('C_PRESS_SKILL', 4, lastBulk);
-	}
   });
 
 
@@ -1642,9 +1506,6 @@ module.exports = function lancer(dispatch) {
   });
 
   dispatch.hook('C_START_INSTANCE_SKILL', 7, (event) => {
-	  if(ONSLAUGHT_LOCK_DELAY && onslaughtlock && event.skill.id != S_BStep && event.skill.id != SKILL_BLOCK){
-		return false;
-	}
     if (blockActive ==1) {
       return false;
     }
@@ -1666,14 +1527,10 @@ module.exports = function lancer(dispatch) {
   dispatch.hook('C_PRESS_SKILL', 4, (event) => {
     if (!enabled) return;
     lastSkillDelay =999999;
-	if(ONSLAUGHT_LOCK_DELAY && onslaughtlock && event.skill.id != S_BStep && event.skill.id != SKILL_BLOCK){
-		return false;
-	}
     if (lastSkill ==1) {
       lastSkill =2;
     }
     if (blockActive != 1 && event.skill.id == SKILL_BLOCK && event.press == false) { return; }
-	//if(finish[S_BStep] == false && event.skill.id == S_Bulwark && event.press == true){ return false;}
     //if((lastSkill == S_ShBarrage || lastSkill == S_ShBarrage2) && (finish[lastSkill] == false || finish["special"] == false) && SB_AUTO_SPRING && event.press == true){
     //  return false;
     //}
@@ -1738,7 +1595,7 @@ module.exports = function lancer(dispatch) {
         moving: false,
         dest: { x: 0, y: 0, Z: 0 },
         target: 0n,
-        animSeq: [],
+        movement: [],
       });
       setTimeout(function (event) {
         if (lastSkill == S_Bulwark && checkerr ==1) {
@@ -1760,7 +1617,7 @@ module.exports = function lancer(dispatch) {
             moving: false,
             dest: { x: 0, y: 0, Z: 0 },
             target: 0n,
-            animSeq: [],
+            movement: [],
           });
         }
       }, S_Bulwark_D, event);
@@ -1817,7 +1674,7 @@ module.exports = function lancer(dispatch) {
           moving: false,
           dest: { x: 0, y: 0, Z: 0 },
           target: 0n,
-          animSeq: [],
+          movement: [],
         });
       }, SKILL_BLOCK_D, event);
       if (finish[S_ShBarrage] == false && !SB_AUTO_SPRING) {
@@ -1863,7 +1720,7 @@ module.exports = function lancer(dispatch) {
               moving: false,
               dest: { x: 0, y: 0, Z: 0 },
               target: 0n,
-              animSeq: [],
+              movement: [],
             });
             lastLastSkill = lastSkill;
             lastSkill = event.skill.id;
@@ -1913,7 +1770,7 @@ module.exports = function lancer(dispatch) {
         moving: false,
         dest: { x: 0, y: 0, Z: 0 },
         target: 0n,
-        animSeq: [],
+        movement: [],
       });
     }
     if (event.press == true) {
@@ -1953,7 +1810,7 @@ module.exports = function lancer(dispatch) {
     }
   });
 
-  dispatch.hook('S_ABNORMALITY_BEGIN', 4, (event) => {
+  dispatch.hook('S_ABNORMALITY_BEGIN', 5, (event) => {
     if (!enabled) return;
     if (event.target !== cid) {
       return;
@@ -2040,12 +1897,6 @@ module.exports = function lancer(dispatch) {
       lastSkill =2;
     }
     clearTimeout(blockd);
-	if(ONSLAUGHT_LOCK_DELAY && onslaughtlock && event.skill.id != S_BStep && event.skill.id != SKILL_BLOCK){
-		return false;
-	}
-	if((event.skill.id == S_ARush || event.skill.id == S_ARush_2 || event.skill.id == S_ARush_3) && locking){
-		return false;
-	}
     if (event.skill.id == S_Spring && (lastSkill != S_ShCo && lastSkill != SKILL_BLOCK && lastSkill != S_IronWill && lastSkill != S_Pledge && lastSkill != S_Deb && lastSkill != S_Lockdown && lastSkill != S_P3 && lastSkill != S_ShBarrage && lastSkill != S_ShBarrage2 && lastSkill != S_SBash) && finish[lastSkill] == false && finish[S_ShCo] != false) {
       return false;
     }
@@ -2084,10 +1935,6 @@ module.exports = function lancer(dispatch) {
     if (event.skill.id == S_SBash_2) {
       event.skill.id = S_SBash;
     }
-	
-	if(event.skill.id == S_ARush_2 || event.skill.id == S_ARush_3){
-		event.skill.id = S_ARush;
-	}
 
     if (event.skill.id == S_BStep && myRE <700) { return false; }
     if (event.skill.id == S_BStep && myRE < 800 && glyphState[22067] != 1 && glyphState[22089] !=1) { return false; }
@@ -2156,23 +2003,6 @@ module.exports = function lancer(dispatch) {
       }
 
       if (job == JOB_LANCER && event.skill.id == S_RightLeap) {
-		  
-		  if(AUTO_CHARGE_LEAP && lastSkill != S_Wallop){
-			  if(cdCheck[SKILL_CHARGING]){
-			  dispatch.toServer('C_START_TARGETED_SKILL', 7, {
-				  targets: event.target,
-				  skill: SKILL_CHARGING,
-				  loc: event.loc,
-				  w: event.w,
-				  dest: event.dest,
-			  });
-			  lastSkill = SKILL_CHARGING;
-			  finish[lastSkill] = false;
-			  }
-		  }
-		  
-		  
-		  dstance =0;
         disabSkill[event.skill.id] = true;
         var timer = setTimeout(function () { disabSkill[S_RightLeap] = false; }, GLOBAL_LOCK_DELAY);
         if (!disabSkill[977] || ((lastSkill == S_Wallop || lastSkill == SKILL_CHARGING || lastSkill == SKILL_CHARGING_2) && finish[lastSkill] == false)) {
@@ -2215,7 +2045,7 @@ module.exports = function lancer(dispatch) {
                   z: collisionLocZ || event.loc.z
                 },
                 target: 0n,
-                animSeq: [],
+                movement: [],
               });
             }
           }, S_RightLeap_D / aspd, event);
@@ -2253,7 +2083,7 @@ module.exports = function lancer(dispatch) {
                   z: collisionLocZ || event.loc.z
                 },
                 target: 0n,
-                animSeq: [],
+                movement: [],
               });
             }
           }, (S_RightLeap_D + S_RightLeap_D2_2) / aspd, event);
@@ -2298,7 +2128,7 @@ module.exports = function lancer(dispatch) {
                   z: collisionLocZ || event.loc.z
                 },
                 target: 0n,
-                animSeq: [],
+                movement: [],
               });
             }
           }, S_RightLeap_D / aspd, event);
@@ -2336,7 +2166,7 @@ module.exports = function lancer(dispatch) {
                   z: collisionLocZ || event.loc.z
                 },
                 target: 0n,
-                animSeq: [],
+                movement: [],
               });
             }
           }, (S_RightLeap_D + S_RightLeap_D2_1) / aspd, event);
@@ -2350,27 +2180,9 @@ module.exports = function lancer(dispatch) {
       }
 
       if (job == JOB_LANCER && event.skill.id == S_OnSl) {
-		  dstance =0;
         disabSkill[event.skill.id] = true;
         var timer = setTimeout(function () { disabSkill[S_OnSl] = false; }, GLOBAL_LOCK_DELAY);
         fakeEnd_sorc_dist(event, (S_OnSl_D + S_OnSl_D2 + S_OnSl_D3 + S_OnSl_D4 + S_OnSl_D5 + S_OnSl_D6),480);
-		onslaughtlock = true;
-		if(!sBashGlyph){
-			if(talentState[820320]){
-				setTimeout(function () { onslaughtlock = false; }, ((ONSLAUGHT_AUTO_CANCEL_DELAY -300) / (aspd * (1 + talentState[820320] * 5 / 700 + 75 /700))));
-			}
-			if(!talentState[820320]){
-				setTimeout(function () { onslaughtlock = false; }, ((ONSLAUGHT_AUTO_CANCEL_DELAY -300) / aspd));
-			}
-		}
-		if(sBashGlyph){
-			if(talentState[820320]){
-				setTimeout(function () { onslaughtlock = false; }, ((ONSLAUGHT_AUTO_CANCEL_DELAY -300) / (aspd * (1.25 * (1 + talentState[820320] * 5 / 700 + 75 /700)))));
-			}
-			if(!talentState[820320]){
-				setTimeout(function () { onslaughtlock = false; }, ((ONSLAUGHT_AUTO_CANCEL_DELAY -300) / aspd / 1.25));
-			}
-		}
       }
 
       if (job == JOB_LANCER && event.skill.id == S_ChSh) {
@@ -2448,9 +2260,7 @@ module.exports = function lancer(dispatch) {
       }
 
       if (job == JOB_LANCER && event.skill.id == S_ShCo && ((dstance == 1 && (finish[S_Wallop] == false || finish[S_RightLeap] == false || finish[S_OnSl] == false || blockActive ==1)))) {
-        setTimeout(function (event) { dispatch.toServer('C_START_SKILL', 7, event); }, 250, event);
-		setTimeout(function (event) { dispatch.toServer('C_START_SKILL', 7, event); }, 300, event);
-		disabSkill[event.skill.id] = true;
+        disabSkill[event.skill.id] = true;
         disabSkill[9975] = true;
         setTimeout(function () { disabSkill[9975] = false; }, S_ShCo_D / aspd);
         var timer = setTimeout(function () { disabSkill[S_ShCo] = false; }, GLOBAL_LOCK_DELAY);
@@ -2505,7 +2315,7 @@ module.exports = function lancer(dispatch) {
                 moving: false,
                 dest: { x: 0, y: 0, Z: 0 },
                 target: 0n,
-                animSeq: [],
+                movement: [],
               });
               if (typeof lastEvent != 'undefined') {
                 force_end(lastEvent,6);
@@ -2618,7 +2428,7 @@ module.exports = function lancer(dispatch) {
                       moving: false,
                       dest: { x: 0, y: 0, Z: 0 },
                       target: 0n,
-                      animSeq: [],
+                      movement: [],
                     });
                     if (typeof lastEvent != 'undefined') {
                       force_end(lastEvent,6);
@@ -2729,7 +2539,7 @@ module.exports = function lancer(dispatch) {
                 moving: false,
                 dest: { x: 0, y: 0, Z: 0 },
                 target: 0n,
-                animSeq: [],
+                movement: [],
               });
               if (typeof lastEvent != 'undefined') {
                 force_end(lastEvent,6);
@@ -2814,7 +2624,7 @@ module.exports = function lancer(dispatch) {
                 moving: false,
                 dest: { x: 0, y: 0, Z: 0 },
                 target: 0n,
-                animSeq: [],
+                movement: [],
               });
               if (typeof lastEvent != 'undefined') {
                 force_end(lastEvent,6);
@@ -2928,7 +2738,7 @@ module.exports = function lancer(dispatch) {
                       moving: false,
                       dest: { x: 0, y: 0, Z: 0 },
                       target: 0n,
-                      animSeq: [],
+                      movement: [],
                     });
                     if (typeof lastEvent != 'undefined') {
                       force_end(lastEvent,6);
@@ -3048,7 +2858,7 @@ module.exports = function lancer(dispatch) {
                 moving: false,
                 dest: { x: 0, y: 0, Z: 0 },
                 target: 0n,
-                animSeq: [],
+                movement: [],
               });
               if (typeof lastEvent != 'undefined') {
                 force_end(lastEvent,6);
@@ -3095,12 +2905,6 @@ module.exports = function lancer(dispatch) {
         disabSkill[event.skill.id] = true;
         var timer = setTimeout(function () { disabSkill[S_ARush] = false; }, GLOBAL_LOCK_DELAY);
         fakeEnd_sorc_dist(event, S_ARush_D,0);
-			if (ARUSH_X) {
-					var robot19 = require("robotjs");
-					robot19.keyTap(X_KEY);
-					robot19.keyTap(Y_KEY);
-					robot19.keyTap(Z_KEY);
-				}
       }
 
       if (job == JOB_LANCER && event.skill.id == S_ShBarrage) {
@@ -3155,7 +2959,7 @@ module.exports = function lancer(dispatch) {
                 moving: false,
                 dest: { x: 0, y: 0, Z: 0 },
                 target: 0n,
-                animSeq: [],
+                movement: [],
               });
               dispatch.toClient('S_ACTION_END', 5, {
                 gameId: cid,
@@ -3307,7 +3111,7 @@ module.exports = function lancer(dispatch) {
                 moving: false,
                 dest: { x: 0, y: 0, Z: 0 },
                 target: 0n,
-                animSeq: [],
+                movement: [],
               });
               if (typeof lastEvent != 'undefined') {
                 force_end(lastEvent,6);
@@ -3399,7 +3203,7 @@ module.exports = function lancer(dispatch) {
                 moving: false,
                 dest: { x: 0, y: 0, Z: 0 },
                 target: 0n,
-                animSeq: [],
+                movement: [],
               });
               if (typeof lastEvent != 'undefined') {
                 force_end(lastEvent,6);
@@ -3497,12 +3301,6 @@ module.exports = function lancer(dispatch) {
         repeater(SPRING_KEY, S_ShBarrage2);
       }, SPRING_BUG_TIME / aspd);
     }
-	if (lastSkill == S_ShBarrage2 && SBarrage_AUTO_ONSLAUGHT) {
-      setTimeout(function () {
-        failsafe =0;
-        repeater(ONSLAUGHT_KEY, S_ShBarrage2);
-      }, 0 / aspd);
-    }
     if (lastSkill == S_Wallop && WALLOP_AUTO_LEAP) {
       setTimeout(function () {
         if (LEAP_ARUSH_NO_CANCEL && cdCheck[S_ARush]) { return; }
@@ -3516,49 +3314,23 @@ module.exports = function lancer(dispatch) {
         repeater(BLOCK_KEY, S_P);
       }, AUTO_ATTACK_CANCEL_DELAY / aspd);
     }
-	if (lastSkill == S_P && AUTO_ATTACK_ONSLAUGHT && lastEvent.moving == false) {
-      setTimeout(function () {
-        failsafe =0;
-        repeater(ONSLAUGHT_KEY, S_P);
-      },0);
-    }
     if (lastSkill == S_OnSl && ONSLAUGHT_AUTO_CANCEL) {
       if (sBashGlyph) {
         failsafe =0;
 		if(ONSLAUGHT_AUTO_CANCEL && dstance !=1){
-			if(talentState[820320]){
-				setTimeout(function () { repeater(BLOCK_KEY, S_OnSl); }, (ONSLAUGHT_AUTO_CANCEL_DELAY / (aspd * (1.25 * (1 + talentState[820320] * 5 / 700 + 75 /700)))));
-			}
-			if(!talentState[820320]){
-				setTimeout(function () { repeater(BLOCK_KEY, S_OnSl); }, (ONSLAUGHT_AUTO_CANCEL_DELAY / aspd / 1.25));
-			}
+			setTimeout(function () { repeater(BLOCK_KEY, S_OnSl); }, (ONSLAUGHT_AUTO_CANCEL_DELAY / aspd / 1.25));
 		}
 		if(!ONSLAUGHT_AUTO_CANCEL){
-			if(talentState[820320]){
-				setTimeout(function () { repeater(BLOCK_KEY, S_OnSl); }, (ONSLAUGHT_AUTO_CANCEL_DELAY / (aspd * (1.25 * (1 + talentState[820320] * 5 / 700 + 75 /700)))));
-			}
-			if(!talentState[820320]){
-				setTimeout(function () { repeater(BLOCK_KEY, S_OnSl); }, (ONSLAUGHT_AUTO_CANCEL_DELAY / aspd / 1.25));
-			}
+			setTimeout(function () { repeater(BLOCK_KEY, S_OnSl); }, (ONSLAUGHT_AUTO_CANCEL_DELAY / aspd / 1.25));
 		}
       }
       if (!sBashGlyph) {
         failsafe =0;
 		if(ONSLAUGHT_AUTO_CANCEL && dstance !=1){
-			if(talentState[820320]){
-				setTimeout(function () { repeater(BLOCK_KEY, S_OnSl); }, (ONSLAUGHT_AUTO_CANCEL_DELAY / (aspd * (1 + talentState[820320] * 5 / 700 + 75 /700))));
-			}
-			if(!talentState[820320]){
-				setTimeout(function () { repeater(BLOCK_KEY, S_OnSl); }, (ONSLAUGHT_AUTO_CANCEL_DELAY / aspd));
-			}
+			setTimeout(function () { repeater(BLOCK_KEY, S_OnSl); }, (ONSLAUGHT_AUTO_CANCEL_DELAY / aspd));
 		}
 		if(!ONSLAUGHT_AUTO_CANCEL){
-			if(talentState[820320]){
-				setTimeout(function () { repeater(BLOCK_KEY, S_OnSl); }, (ONSLAUGHT_AUTO_CANCEL_DELAY / (aspd * (1 + talentState[820320] * 5 / 700 + 75 /700))));
-			}
-			if(!talentState[820320]){
-				setTimeout(function () { repeater(BLOCK_KEY, S_OnSl); }, (ONSLAUGHT_AUTO_CANCEL_DELAY / aspd));
-			}
+			setTimeout(function () { repeater(BLOCK_KEY, S_OnSl); }, (ONSLAUGHT_AUTO_CANCEL_DELAY / aspd));
 		}
       }
     }
@@ -3575,7 +3347,7 @@ module.exports = function lancer(dispatch) {
   });
 
   dispatch.hook('S_ACTION_STAGE', 9, (event) => {
-	  //console.log("test: " + event.skill == 67118112);
+	  //console.log("test: " + event.skill == 67114202);
     if (!enabled) return;
     if(event.gameId === cid) {
       var d = new Date();
@@ -3686,7 +3458,7 @@ module.exports = function lancer(dispatch) {
                     moving: false,
                     dest: { x: 0, y: 0, Z: 0 },
                     target: 0n,
-                    animSeq: [],
+                    movement: [],
                   });
                   if (typeof lastEvent != 'undefined') {
                     force_end(lastEvent,6);
@@ -3791,7 +3563,7 @@ module.exports = function lancer(dispatch) {
   });
 
   dispatch.hook('S_ACTION_END', 5, (event) => {
-	  if(event.skill == 67108320) console.log("error");
+	  if(event.skill == 67108550) console.log("error");
     if (!enabled) return;
     if(event.gameId === cid) {
       var d = new Date();
@@ -3904,18 +3676,11 @@ module.exports = function lancer(dispatch) {
   dispatch.hook('S_START_COOLTIME_SKILL', 3, { order: -99999 }, (event) => {
     if (!enabled) return;
     event.cooldown -= GLOBAL_LATENCY;
-	
-	if(event.skill.id == S_ARush || event.skill.id == S_ARush_2 || event.skill.id == S_ARush_3){
-			clearTimeout(locking2);
-			locking = true;
-			locking2 = setTimeout(function(){locking = false;}, event.cooldown);
-		}
-	
     return true;
   });
 
 
-  dispatch.hook('S_PLAYER_STAT_UPDATE', dispatch.majorPatchVersion >= 93 ? 14 : 13, (event) => {
+  dispatch.hook('S_PLAYER_STAT_UPDATE', 17, (event) => {
     if (!enabled) return;
     aspd = (event.attackSpeed + event.attackSpeedBonus) / event.attackSpeed;
     if (event.hp ==0) {
@@ -3924,9 +3689,6 @@ module.exports = function lancer(dispatch) {
       clearTimeout(onslaughtTimer3);
       clearTimeout(onslaughtTimer4);
       clearTimeout(onslaughtTimer5);
-	  blockActive =0;
-      dstance =0;
-      clearTimeout(blockd);
     }
   });
 
@@ -4032,14 +3794,14 @@ module.exports = function lancer(dispatch) {
   });
 
   dispatch.hook('S_ACTION_STAGE', 9, { order: -99999, filter: { fake: true } }, (event) => {
-	  //console.log("test: " + event.skill == 67118112);
+	  //console.log("test: " + event.skill == 67114202);
     if (!enabled) return;
     if (lastSkill ==1) {
       return false;
     }
   });
   dispatch.hook('S_ACTION_STAGE', 9, (event) => {
-	  //console.log("test: " + event.skill == 67118112);
+	  //console.log("test: " + event.skill == 67114202);
     if (!enabled) return;
     if (event.gameId !== cid) {
       return;
@@ -4051,7 +3813,7 @@ module.exports = function lancer(dispatch) {
     }
   });
   dispatch.hook('S_ACTION_END', 5, (event) => {
-	  if(event.skill == 67108320) console.log("error");
+	  if(event.skill == 67108550) console.log("error");
     if (!enabled) return;
     if (event.gameId !== cid) {
       return;
