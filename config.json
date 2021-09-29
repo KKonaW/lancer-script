@@ -61,7 +61,7 @@
 	"AGGRO_SHOUT_AUTO_CANCEL_DESCRIPTION": "DO NOT USE THIS WITHOUT ROBOTJS. Auto cancels challenging shout",
 	"AGGRO_SHOUT_AUTO_CANCEL_DELAY": 1400,
 	"AGGRO_SHOUT_AUTO_CANCEL_DELAY_DESCRIPTION": "Challenging shout auto cancel delay",
-	"WALLOP_AUTO_LEAP": false,
+	"WALLOP_AUTO_LEAP": true,
 	"WALLOP_AUTO_LEAP_DESCRIPTION": "DO NOT USE THIS WITHOUT ROBOTJS. Auto super leap after wallop. Activating this macro will also (obviously) disable wallop auto block cancel when leap is off CD.",
 	"LEAP_KEY": "f7",
 	"LEAP_KEY_DESCRIPTION": "Key for super leap, find keyboard syntax list here http://robotjs.io/docs/syntax",
