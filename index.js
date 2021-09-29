@@ -1,3 +1,4 @@
+/* SCRIPT BY YOUR MOM */
 'use strict'
 //Lancer Skills
 
