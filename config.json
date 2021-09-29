@@ -1,6 +1,6 @@
 {
 	"AUTOBLOCKRESET": "h1 command in game toggles block to be dropped and immediately restarted whenever you block an attack. Auto block reset is disabled by default. Is this even useful outside HTL stacking?",
-	"GLOBAL_LATENCY": 100,
+	"GLOBAL_LATENCY": 0,
 	"GLOBAL_LATENCY_DESCRIPTION": "change GLOBAL_LATENCY to your lowest usual ping",
 	"BARRAGE_CANCEL_TIME": 200,
 	"BARRAGE_CANCEL_TIME_DESCRIPTION": "Self explanatory. This can be toggled in chat with sbtoggle1 command.",
