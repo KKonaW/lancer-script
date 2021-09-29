@@ -694,7 +694,7 @@ module.exports = function lancer(dispatch) {
     }
   });
   
-  dispatch.hook('S_LOGIN', dispatch.majorPatchVersion >= 86 ? 14 : 13, (event) => {
+  dispatch.hook('S_LOGIN', 14, (event) => {
 	  lastBulk = event;
     cid = event.gameId;
     model = event.templateId;
@@ -783,7 +783,7 @@ module.exports = function lancer(dispatch) {
       skill: event.skill.id,
       stage: 0,
       speed: aspd,
-      ...(dispatch.majorPatchVersion >= 75 ? { projectileSpeed: aspd } : 0n),
+      ...(dispatch.majorPatchVersion >= 110 ? { projectileSpeed: aspd } : 0n),
       id: atkid[event.skill.id],
       effectScale: 1.0,
       moving: false,
@@ -1590,7 +1590,7 @@ module.exports = function lancer(dispatch) {
         skill: event.skill.id,
         stage: 0,
         speed: 1,
-        ...(dispatch.majorPatchVersion >= 75 ? { projectileSpeed: 1 } : 0n),
+        ...(dispatch.majorPatchVersion >= 110 ? { projectileSpeed: 1 } : 0n),
         id: atkid[event.skill.id],
         effectScale: 1.0,
         moving: false,
@@ -1612,7 +1612,7 @@ module.exports = function lancer(dispatch) {
             skill: event.skill.id,
             stage: 1,
             speed: 1,
-            ...(dispatch.majorPatchVersion >= 75 ? { projectileSpeed: 1 } : 0n),
+            ...(dispatch.majorPatchVersion >= 110 ? { projectileSpeed: 1 } : 0n),
             id: atkid[event.skill.id],
             effectScale: 1.0,
             moving: false,
@@ -1669,7 +1669,7 @@ module.exports = function lancer(dispatch) {
           skill: event.skill.id,
           stage: 1,
           speed: 1,
-          ...(dispatch.majorPatchVersion >= 75 ? { projectileSpeed: 1 } : 0n),
+          ...(dispatch.majorPatchVersion >= 110 ? { projectileSpeed: 1 } : 0n),
           id: atkid[event.skill.id],
           effectScale: 1.0,
           moving: false,
@@ -2157,7 +2157,7 @@ module.exports = function lancer(dispatch) {
                 skill: event.skill.id + 0,
                 stage: 2,
                 speed: aspd,
-                ...(dispatch.majorPatchVersion >= 75 ? { projectileSpeed: aspd } : 0n),
+                ...(dispatch.majorPatchVersion >= 110 ? { projectileSpeed: aspd } : 0n),
                 id: atkid[event.skill.id + 0],
                 effectScale: 1.0,
                 moving: false,
@@ -2310,7 +2310,7 @@ module.exports = function lancer(dispatch) {
                 skill: SKILL_BLOCK,
                 stage: 0,
                 speed: 1,
-                ...(dispatch.majorPatchVersion >= 75 ? { projectileSpeed: 1 } : 0n),
+                ...(dispatch.majorPatchVersion >= 110 ? { projectileSpeed: 1 } : 0n),
                 id: atkid[SKILL_BLOCK],
                 effectScale: 1.0,
                 moving: false,
