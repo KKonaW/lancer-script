@@ -1,11 +1,11 @@
 {
     "disableAutoUpdate": true,
-    "name": "script-lancer",
-    "author": "<font color='#FDD017'>AOC 2024</font>",
+    "name": "Lancer-script",
+    "author": "Bernkastel",
     "description": "==",
-    "version": "<font color='#FC0FC0'>GF-110</font>",
+    "version": "1.0",
     "options": {
-        "niceName": "script-lancer",
-        "guiName": "<font color='#FDD017'>script-lancer</font>"
+        "niceName": "lancer-script",
+        "guiName": "lancer-script"
     }
 }
